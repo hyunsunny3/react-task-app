@@ -1,0 +1,1 @@
+// redux store > reducer > slices(board, logger, modal ...)
