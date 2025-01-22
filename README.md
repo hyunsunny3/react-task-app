@@ -48,3 +48,10 @@ export default tseslint.config({
   },
 })
 ```
+
+<!-- 설치 패키지
+  react-redux
+  @reduxjs/toolkit redux clsx 
+  @vanilla-extract/css css-utils
+  @vanilla-extract/vite-plugin react-icons uuid react-beautiful-dnd
+-->
