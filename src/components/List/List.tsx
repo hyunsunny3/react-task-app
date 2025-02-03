@@ -1,4 +1,3 @@
-import React, { FC } from 'react'
 import { GrSubscript } from 'react-icons/gr'
 import Task from '../Task/Task'
 import ActionButton from '../ActionButton/ActionButton'
@@ -9,6 +8,7 @@ import { addLog } from '../../store/slices/loggerSlice'
 import { v4 } from 'uuid'
 import { setModalData } from '../../store/slices/modalSlice'
 import { deleteButton, header, listWrapper, name } from './List.css'
+import { FC } from 'react'
 
 type TListProps = {
   boardId: string;
