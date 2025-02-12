@@ -8,7 +8,7 @@ import LoggerModal from "./components/LoggerModal/LoggerModal";
 import { deleteBoard, sort } from "./store/slices/boardsSlice";
 import { v4 } from "uuid";
 import { addLog } from "./store/slices/loggerSlice";
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext } from '@hello-pangea/dnd';
 
 
 function App() {
@@ -51,15 +51,14 @@ function App() {
   }
 
   const handleDragEnd = (result: any) => {
-    console.log(result);
     const { destination, source, draggableId } = result;
-    console.log('lists : ', lists);
     
-    const sourceList = lists.filter(
-      list => list.listId === source.droppableId
-    )[0];
-    
-    console.log('source list : ', sourceList);
+    const sourceList = lists.find(list => list.listId === source.droppableId);
+    const targetList = lists.find(list => list.listId === destination.droppableId);
+
+    // 목적지가 없으면 (예: 드래그 도중 취소) 함수 종료
+    if (!destination) return;
+    if (!sourceList) return;
 
     dispatch(
       sort({
@@ -72,18 +71,19 @@ function App() {
       })
     )
 
-    dispatch(
-      addLog({
-        logId: v4(),
-        logMessage: `
-          리스트 "${sourceList.listName}"에서
-          리스트 "${lists.filter(list => list.listId === destination.droppableId)[0].listName}"으로
-          ${sourceList.tasks.filter(task => task.taskId === draggableId)[0].taskName}을 옮김
-        `,
-        logAuthor: "User",
-        logTimestamp: String(Date.now()),
-      })
-    )
+    if (targetList) {
+      dispatch(
+        addLog({
+          logId: v4(),
+          logMessage: `
+          리스트 "${sourceList.listName}"에서 
+          리스트 "${targetList.listName}"으로 
+          "${sourceList.tasks.find(task => task.taskId === draggableId)?.taskName || "알 수 없음"}"을 옮김`,
+          logAuthor: "User",
+          logTimestamp: String(Date.now()),
+        })
+      );
+    }
   }
 
   return (

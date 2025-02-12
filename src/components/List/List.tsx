@@ -9,7 +9,8 @@ import { v4 } from 'uuid'
 import { setModalData } from '../../store/slices/modalSlice'
 import { deleteButton, header, listWrapper, name } from './List.css'
 import { FC } from 'react'
-import { Droppable } from 'react-beautiful-dnd'
+import { Droppable } from "@hello-pangea/dnd";
+
 
 type TListProps = {
   boardId: string;

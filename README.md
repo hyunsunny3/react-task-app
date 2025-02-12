@@ -53,5 +53,5 @@ export default tseslint.config({
   react-redux
   @reduxjs/toolkit redux clsx 
   @vanilla-extract/css css-utils
-  @vanilla-extract/vite-plugin react-icons uuid react-beautiful-dnd
+  @vanilla-extract/vite-plugin react-icons uuid @hello-pangea/dnd
 -->
