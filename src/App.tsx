@@ -23,28 +23,30 @@ function App() {
 
   const handleDeleteBoard = () => {
     if(boards.length > 1){
-      dispatch(
-        deleteBoard({boardId: getActiveBoard.boardId})
-      )
-      dispatch(
-        addLog({
-          logId: v4(),
-          logMessage: `게시판 삭제 : ${getActiveBoard.boardName}`,
-          logAuthor: 'User',
-          logTimestamp: String(Date.now())
-        })
-      )
-
-      const newIndexToSet = () => {
-        const indexToBeDeleted = boards.findIndex(
-          board => board.boardId === activeBoardId
+      if(confirm("정말 삭제하시겠습니까?") === true){
+        dispatch(
+          deleteBoard({boardId: getActiveBoard.boardId})
         )
-
-        return indexToBeDeleted === 0 ? indexToBeDeleted + 1 : indexToBeDeleted - 1
+        
+        dispatch(
+          addLog({
+            logId: v4(),
+            logMessage: `게시판 삭제 : ${getActiveBoard.boardName}`,
+            logAuthor: 'User',
+            logTimestamp: String(Date.now())
+          })
+        )
+  
+        const newIndexToSet = () => {
+          const indexToBeDeleted = boards.findIndex(
+            board => board.boardId === activeBoardId
+          )
+  
+          return indexToBeDeleted === 0 ? indexToBeDeleted + 1 : indexToBeDeleted - 1
+        }
+  
+        setActiveBoardId(boards[newIndexToSet()].boardId)
       }
-
-      setActiveBoardId(boards[newIndexToSet()].boardId)
-      
     }else{
       alert('최소 게시판 개수는 한 개입니다.');
     }
@@ -76,8 +78,7 @@ function App() {
         addLog({
           logId: v4(),
           logMessage: `
-          리스트 "${sourceList.listName}"에서 
-          리스트 "${targetList.listName}"으로 
+          리스트 "${sourceList.listName}"에서 리스트 "${targetList.listName}"으로 
           "${sourceList.tasks.find(task => task.taskId === draggableId)?.taskName || "알 수 없음"}"을 옮김`,
           logAuthor: "User",
           logTimestamp: String(Date.now()),
@@ -91,6 +92,7 @@ function App() {
     <div className={appContainer}>
       {isLoggerOpen ? <LoggerModal setIsLoggerOpen={setIsLoggerOpen} /> : null}
       {modalActive ? <EditModal /> : null}
+      
       <BoardList 
         activeBoardId={activeBoardId} 
         setActiveBoardId={setActiveBoardId} 
@@ -100,13 +102,12 @@ function App() {
         <DragDropContext onDragEnd={handleDragEnd}>
           <ListsContainer lists={lists} boardId={getActiveBoard.boardId} />
         </DragDropContext>
+        <button className={deleteBoardButton} onClick={handleDeleteBoard}>게시판 삭제</button>
       </div>
       
       <div className={buttons}>
-        <button className={deleteBoardButton} onClick={handleDeleteBoard}>게시판 삭제</button>
-        <button className={loggerButton} onClick={() => setIsLoggerOpen(!isLoggerOpen)}>
-          {isLoggerOpen ? "활동 목록 숨기기" : "활동 목록 보이기"}
-        </button>
+        {/* <button className={deleteBoardButton} onClick={handleDeleteBoard}>게시판 삭제</button> */}
+        <button className={loggerButton} onClick={() => setIsLoggerOpen(!isLoggerOpen)}>활동 기록 보기</button>
       </div>
     </div>
   )

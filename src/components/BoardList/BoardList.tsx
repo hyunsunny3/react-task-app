@@ -85,6 +85,7 @@ const BoardList : FC<TBoardListProps> = ({activeBoardId, setActiveBoardId}) => {
       ) : (
         <div>게시판이 없습니다.</div>
       )}
+      
       <div className={addSection}>
         {isFormOpen ? (
           <SideForm inputRef={inputRef} setFormOpen={setIsFormOpen} />

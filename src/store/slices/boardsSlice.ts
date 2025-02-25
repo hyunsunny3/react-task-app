@@ -197,7 +197,7 @@ const boardsSlice = createSlice({
         const listEnd = state.boardArray[payload.boardIndex].lists.find(
           list => list.listId === payload.droppableIdEnd
         )
-        listEnd?.tasks.splice(payload.droppableIndexEnd, 0, ...card!);
+        listEnd?.tasks.splice(payload.droppableIndexEnd, 0, ...card);
       }
     },
   }
